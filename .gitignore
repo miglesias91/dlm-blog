@@ -21,3 +21,9 @@ node_modules/
 *.log
 *.sql
 *.sqlite
+
+# imagenes
+*.png
+*.jpg
+*.jpeg
+

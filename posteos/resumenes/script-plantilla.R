@@ -8,7 +8,7 @@ library(jsonlite)
 #   "password" : "mi_password"
 #   "servidor" : "ip_del_servidor"
 # }
-login = fromJSON('~/dlm-login.json')
+login = fromJSON('./dlm-login.json')
 
 usuario = login$usuario
 password = login$password
@@ -22,7 +22,7 @@ hasta = ''
 # recupero la foto de los medios y categorias en las fechas seteadas
 dfoto = foto(desde = desde, hasta = hasta)
 dfoto$por_dia = sprintf('%.2f',dfoto$por_dia) # guardo con 2 decimales
-fwrite(dfoto, '~/medios_categoria.csv')
+fwrite(dfoto, './medios_categoria.csv')
 
 # recupero la foto de las palabras en los textos de noticias en las fechas seteadas
 dfoto_palabras_texto = foto_palabras(que = c('terminos','personas'),
@@ -35,12 +35,12 @@ dfoto_palabras_texto = foto_palabras(que = c('terminos','personas'),
                                top_por_tendencia = 1000,
                                por_categoria = F)
 # guardo el dataset entero
-fwrite(dfoto_palabras_texto, '~/palabras_texto.csv')
+fwrite(dfoto_palabras_texto, './palabras_texto.csv')
 
 # guardo el optimizado para subir al blog
 dfoto_palabras_texto$por_noticia = sprintf('%.2f',dfoto_palabras_texto$por_noticia)
 setcolorder(dfoto_palabras_texto, c('palabra', 'freq','por_noticia', 'diario'))
-fwrite(dfoto_palabras_texto[diario != 'casarosada'][1:200], '~/palabras_texto_blog.csv')
+fwrite(dfoto_palabras_texto[diario != 'casarosada'][1:200], './palabras_texto_blog.csv')
 
 # recupero la foto de las palabras en los titulos de noticias en las fechas seteadas
 dfoto_palabras_titulo = foto_palabras(que = c('terminos','personas'),
@@ -53,16 +53,16 @@ dfoto_palabras_titulo = foto_palabras(que = c('terminos','personas'),
                                      top_por_tendencia = 1000,
                                      por_categoria = F)
 # guardo el dataset entero
-fwrite(dfoto_palabras_titulo, '~/palabras_titulo.csv')
+fwrite(dfoto_palabras_titulo, './palabras_titulo.csv')
 
 # guardo el optimizado para subir al blog
 dfoto_palabras_titulo$por_noticia = sprintf('%.2f',dfoto_palabras_titulo$por_noticia)
 setcolorder(dfoto_palabras_titulo, c('palabra', 'freq','por_noticia', 'diario'))
-fwrite(dfoto_palabras_titulo[diario != 'casarosada'][1:200], '~/palabras_titulo_blog.csv')
+fwrite(dfoto_palabras_titulo[diario != 'casarosada'][1:200], './palabras_titulo_blog.csv')
 
 # vuelvo a leer los datasets enteros
-dfoto_palabras_titulo = fread('~/palabras_titulo.csv')
-dfoto_palabras_texto = fread('~/palabras_texto.csv')
+dfoto_palabras_titulo = fread('./palabras_titulo.csv')
+dfoto_palabras_texto = fread('./palabras_texto.csv')
 
 # aca empiezo a desarrollar...
 

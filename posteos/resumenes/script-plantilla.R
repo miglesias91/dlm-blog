@@ -24,7 +24,8 @@ dir = ''
 
 # recupero la foto de los medios y categorias en las fechas seteadas
 dfoto = foto(desde = desde, hasta = hasta)
-dfoto$por_dia = sprintf('%.2f',dfoto$por_dia) # guardo con 2 decimales
+# dfoto$por_dia = sprintf('%.2f',dfoto$por_dia) # guardo con 2 decimales
+dfoto = formatear(dfoto)
 fwrite(dfoto, paste0(dir,'/medios_categoria.csv'))
 
 # recupero la foto de las palabras en los textos de noticias en las fechas seteadas
@@ -41,7 +42,8 @@ dfoto_palabras_texto = foto_palabras(que = c('terminos','personas'),
 fwrite(dfoto_palabras_texto, paste0(dir,'/palabras_texto.csv'))
 
 # guardo el optimizado para subir al blog
-dfoto_palabras_texto$por_noticia = sprintf('%.2f',dfoto_palabras_texto$por_noticia)
+# dfoto_palabras_texto$por_noticia = sprintf('%.2f',dfoto_palabras_texto$por_noticia)
+dfoto_palabras_texto = formatear(dfoto_palabras_texto)
 setcolorder(dfoto_palabras_texto, c('palabra', 'freq','por_noticia', 'diario'))
 fwrite(dfoto_palabras_texto[diario != 'casarosada'][1:200], paste0(dir,'/palabras_texto_blog.csv'))
 
@@ -59,13 +61,16 @@ dfoto_palabras_titulo = foto_palabras(que = c('terminos','personas'),
 fwrite(dfoto_palabras_titulo, paste0(dir,'/palabras_titulo.csv'))
 
 # guardo el optimizado para subir al blog
-dfoto_palabras_titulo$por_noticia = sprintf('%.2f',dfoto_palabras_titulo$por_noticia)
+# dfoto_palabras_titulo$por_noticia = sprintf('%.2f',dfoto_palabras_titulo$por_noticia)
+dfoto_palabras_titulo = formatear(dfoto_palabras_titulo)
 setcolorder(dfoto_palabras_titulo, c('palabra', 'freq','por_noticia', 'diario'))
 fwrite(dfoto_palabras_titulo[diario != 'casarosada'][1:200], paste0(dir,'/palabras_titulo_blog.csv'))
 
 # vuelvo a leer los datasets enteros
 dfoto_palabras_titulo = fread(paste0(dir,'/palabras_titulo.csv'))
+dfoto_palabras_titulo = formatear(dfoto_palabras_titulo, cantidad_decimales = -1)
 dfoto_palabras_texto = fread(paste0(dir,'/palabras_texto.csv'))
+dfoto_palabras_texto = formatear(dfoto_palabras_texto, cantidad_decimales = -1)
 
 # aca empiezo a desarrollar...
 

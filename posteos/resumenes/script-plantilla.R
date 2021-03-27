@@ -8,7 +8,7 @@ library(jsonlite)
 #   "password" : "mi_password"
 #   "servidor" : "ip_del_servidor"
 # }
-login = fromJSON('./dlm-login.json')
+login = fromJSON('~/keys/dlm-login.json')
 
 usuario = login$usuario
 password = login$password
@@ -45,7 +45,7 @@ fwrite(dfoto_palabras_texto, paste0(dir,'/palabras_texto.csv'))
 # dfoto_palabras_texto$por_noticia = sprintf('%.2f',dfoto_palabras_texto$por_noticia)
 dfoto_palabras_texto = formatear(dfoto_palabras_texto)
 setcolorder(dfoto_palabras_texto, c('palabra', 'freq','por_noticia', 'diario'))
-fwrite(dfoto_palabras_texto[diario != 'casarosada'][1:200], paste0(dir,'/palabras_texto_blog.csv'))
+fwrite(dfoto_palabras_texto[!(diario %in% c('Casa Rosada','Popular'))][order(-freq)][1:200], paste0(dir,'/palabras_texto_blog.csv'))
 
 # recupero la foto de las palabras en los titulos de noticias en las fechas seteadas
 dfoto_palabras_titulo = foto_palabras(que = c('terminos','personas'),
@@ -64,7 +64,7 @@ fwrite(dfoto_palabras_titulo, paste0(dir,'/palabras_titulo.csv'))
 # dfoto_palabras_titulo$por_noticia = sprintf('%.2f',dfoto_palabras_titulo$por_noticia)
 dfoto_palabras_titulo = formatear(dfoto_palabras_titulo)
 setcolorder(dfoto_palabras_titulo, c('palabra', 'freq','por_noticia', 'diario'))
-fwrite(dfoto_palabras_titulo[diario != 'casarosada'][1:200], paste0(dir,'/palabras_titulo_blog.csv'))
+fwrite(dfoto_palabras_titulo[!(diario %in% c('Casa Rosada','Popular'))][order(-freq)][1:200], paste0(dir,'/palabras_titulo_blog.csv'))
 
 # vuelvo a leer los datasets enteros
 dfoto_palabras_titulo = fread(paste0(dir,'/palabras_titulo.csv'))
